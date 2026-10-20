@@ -73,7 +73,8 @@ docs/RESEARCH.md          how existing PDF password tools work, and what we took
 ## Releasing
 
 - Every push to `main` builds and tests the Mac app and deploys the website to GitHub Pages.
-- Pushing a tag like `v1.0.0` also publishes a GitHub release with the zipped app.
+- Pushing a tag like `v1.0.0`, or publishing a release with a new `v…` tag on github.com, attaches the zipped app to that release.
+- The website needs GitHub Pages turned on once: **Settings › Pages › Source: GitHub Actions**.
 
 ## Contributing
 
