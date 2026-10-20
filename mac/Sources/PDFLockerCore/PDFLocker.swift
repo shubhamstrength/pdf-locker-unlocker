@@ -50,14 +50,19 @@ public struct LockOptions: Equatable, Sendable {
         self.allowEditing = allowEditing
     }
 
-    var permissions: PDFAccessPermissions {
-        var p: PDFAccessPermissions = [.allowsContentAccessibility]
-        if allowPrinting { p.formUnion([.allowsLowQualityPrinting, .allowsHighQualityPrinting]) }
-        if allowCopying { p.insert(.allowsContentCopying) }
-        if allowEditing {
-            p.formUnion([.allowsDocumentChanges, .allowsDocumentAssembly, .allowsCommenting, .allowsFormFieldEntry])
+    /// PDFAccessPermissions bit mask for the writer. PDFAccessPermissions isn't an OptionSet in Swift, so combine raw values.
+    var permissionBits: UInt {
+        var bits = PDFAccessPermissions.allowsContentAccessibility.rawValue
+        if allowPrinting {
+            bits |= PDFAccessPermissions.allowsLowQualityPrinting.rawValue | PDFAccessPermissions.allowsHighQualityPrinting.rawValue
         }
-        return p
+        if allowCopying { bits |= PDFAccessPermissions.allowsContentCopying.rawValue }
+        if allowEditing {
+            for p in [PDFAccessPermissions.allowsDocumentChanges, .allowsDocumentAssembly, .allowsCommenting, .allowsFormFieldEntry] {
+                bits |= p.rawValue
+            }
+        }
+        return bits
     }
 }
 
@@ -79,7 +84,7 @@ public enum PDFLocker {
         let writeOptions: [PDFDocumentWriteOption: Any] = [
             .userPasswordOption: options.userPassword,
             .ownerPasswordOption: owner,
-            .accessPermissionsOption: NSNumber(value: options.permissions.rawValue),
+            .accessPermissionsOption: NSNumber(value: options.permissionBits),
         ]
         guard doc.write(to: output, withOptions: writeOptions) else { throw PDFLockerError.writeFailed }
     }
