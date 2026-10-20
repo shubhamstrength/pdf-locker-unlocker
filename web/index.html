@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF Locker</title>
+  <meta name="description" content="Add or remove a PDF password in your browser. Free, open source, and your files never leave your device.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23d93a3a'/%3E%3Cpath d='M8 11V8.5a4 4 0 0 1 8 0V11' stroke='white' stroke-width='2' fill='none'/%3E%3Crect x='6' y='11' width='12' height='8' rx='2' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1><span class="logo" aria-hidden="true"></span>PDF Locker</h1>
+    <p class="tagline">Add or remove a PDF password. Everything happens in your browser, so your files are never uploaded.</p>
+  </header>
+
+  <main>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-lock" aria-selected="true" data-mode="lock">Lock PDF</button>
+      <button role="tab" id="tab-unlock" aria-selected="false" data-mode="unlock">Unlock PDF</button>
+    </div>
+
+    <label class="drop" id="drop">
+      <input type="file" id="file-input" accept="application/pdf,.pdf" multiple hidden>
+      <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z M14 3v5h5 M12 17v-6 M9 14l3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <strong>Drop PDFs here</strong>
+      <span>or click to choose files</span>
+    </label>
+
+    <ul class="files" id="files"></ul>
+
+    <form id="form" autocomplete="off">
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="pw"><input type="password" id="password" autocomplete="current-password"><button type="button" class="reveal" aria-label="Show password">Show</button></div>
+      </div>
+
+      <div class="lock-only field">
+        <label for="confirm">Confirm password</label>
+        <div class="pw"><input type="password" id="confirm" autocomplete="new-password"><button type="button" class="reveal" aria-label="Show password">Show</button></div>
+      </div>
+
+      <details class="lock-only" id="restrict">
+        <summary>Restrict printing, copying or editing</summary>
+        <div class="field">
+          <label for="owner">Permissions password</label>
+          <div class="pw"><input type="password" id="owner" autocomplete="new-password"><button type="button" class="reveal" aria-label="Show password">Show</button></div>
+          <small>Needed later to lift the restrictions. Must differ from the open password.</small>
+        </div>
+        <label class="check"><input type="checkbox" id="allow-print" checked> Allow printing</label>
+        <label class="check"><input type="checkbox" id="allow-copy" checked> Allow copying text and images</label>
+        <label class="check"><input type="checkbox" id="allow-edit" checked> Allow editing and comments</label>
+      </details>
+
+      <p class="unlock-only hint">Unlocking makes a copy without a password or restrictions. Leave the password empty for PDFs that open freely but block printing or copying.</p>
+
+      <p class="message" id="message" role="status"></p>
+      <button type="submit" class="primary" id="run" disabled>Lock PDF</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>Uses <a href="https://github.com/qpdf/qpdf">qpdf</a> compiled to WebAssembly, with AES-256 encryption. Prefer a native app? <a href="https://github.com/shubhamstrength/pdf-locker#mac-app">Get PDF Locker for Mac</a>.</p>
+    <p><a href="https://github.com/shubhamstrength/pdf-locker">Source on GitHub</a> · MIT License</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
