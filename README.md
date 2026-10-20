@@ -11,7 +11,7 @@ PDF Locker does not crack or guess passwords. To unlock a PDF that needs a passw
 
 ## Website
 
-**https://shubhamstrength.github.io/pdf-locker/**
+**https://shubhamstrength.github.io/pdf-locker-unlocker/**
 
 The page runs [qpdf](https://github.com/qpdf/qpdf) compiled to WebAssembly inside a Web Worker, so
 encryption and decryption happen on your device. It writes AES-256 encryption and works in any
@@ -38,7 +38,7 @@ A SwiftUI app built on Apple's PDFKit. Requires macOS 13 Ventura or later, on Ap
 
 ### Download
 
-Get `PDF-Locker-mac.zip` from the [latest release](https://github.com/shubhamstrength/pdf-locker/releases/latest),
+Get `PDF-Locker-mac.zip` from the [latest release](https://github.com/shubhamstrength/pdf-locker-unlocker/releases/latest),
 unzip it and move **PDF Locker** to Applications.
 
 The app is not notarized by Apple, so the first time you open it macOS will say it can't check it
